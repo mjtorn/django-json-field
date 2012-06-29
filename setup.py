@@ -1,4 +1,11 @@
-import json_field
+# Can't hit Django by importing json_fields or we hit ImportError on settings
+
+import os
+version = '0.0'
+with open(os.path.join('json_field', '__init__.py')) as f:
+    for l in f.readlines():
+        if l.startswith('__version__'):
+            version = l.rsplit('=', 1)[1].strip()
 
 from distutils.core import setup
 
@@ -12,7 +19,7 @@ except IOError:
 
 setup(
     name = 'django-json-field',
-    version = json_field.__version__,
+    version = version,
     description = description,
     author = 'Derek Schaefer',
     author_email = 'derek.schaefer@gmail.com',
